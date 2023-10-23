@@ -1,0 +1,107 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 800,
+    "height": 400,
+    "title":"Fatalities since 1960",
+    "description": "A bar chart with highlighting on hover and selecting on click. (Inspired by Tableau's interaction style.)",
+    "data": {
+      "url": "https://raw.githubusercontent.com/Kadheegit/Finals_3179/main/data/Plane%20Crashes.csv",
+      "format": {"parse": {"date": "date"}}
+    },
+
+
+    "layer": [ 
+      {
+        "mark": {
+          "type": "bar",
+          "fill": "#bc0b25",
+          "stroke": "black",
+          "cursor": "pointer",
+          "width": 5
+          
+        },
+        
+        "encoding": {
+          "x": {"field": "U Year", "type": "ordinal", "title": "Year Of Crash"},
+          "y": {"field": "Total Death", "type": "quantitative", "title": "Total Fatalities"},
+
+          "strokeWidth": {
+            "condition": [
+
+
+            ],
+            "value": 0
+          },
+          "tooltip": [
+            {"field": "U Year", "type": "nominal", "title": "Crash Year"},
+            {"field": "Total Death", "type": "quantitative", "title": "Total Fatalities"}
+          ]
+          
+        }
+        
+      },
+      {
+        "transform": [
+            {
+              "window": [{"op": "rank", "as": "ranking"}],
+              "sort": [{"field": "Total Death", "order": "descending"}]
+            },
+            {"filter": "datum.ranking == 1"},
+            {
+              "calculate": "'The worst Year which; has the Most crashes with: ' + datum['Total Death'] + ' deaths.'",
+              "as": "text_annotation_raw"
+            },
+            {
+              "calculate": "split(datum.text_annotation_raw, ';')",
+              "as": "text_annotation"
+            }
+          ],
+        "mark": {
+          "type": "text",  
+          "align": "left",
+          "baseline": "middle",
+          "dx": 5,  
+          "color": "orange",
+          "fontWeight": "bold"
+        },
+        "encoding": {
+            "x": {"aggregate": "max", "field": "U Year", "type": "ordinal"},
+            "y": {"aggregate": "max", "field": "Total Death", "type": "quantitative"},
+            "text": {"field": "text_annotation"}
+        }
+           
+      },
+      {
+        "transform": [
+
+            {
+              "calculate": "'The air Tarvel mode bacame; Safer than Most after year 1998. '",
+              "as": "text_annotation_raw"
+            },
+            {
+              "calculate": "split(datum.text_annotation_raw, ';')",
+              "as": "text_annotation2"
+            }
+          ],
+        "mark": {
+            "type": "text",  
+            "align": "center",
+            "baseline": "middle",
+            "dx": 5,  
+            "color": "black",
+            "fontWeight": "bold"
+        },
+        "encoding": {
+          "text": {"field":"text_annotation2" },
+          "x": { "value": 600 }, 
+          "y": { "value": 100 } 
+        }
+      }
+    ],
+    "config": {
+      "scale": {
+        "bandPaddingInner": 0.2
+      },
+      "axis": {"grid": false}
+    }
+  }

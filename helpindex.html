@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Bird Crashes</title>
+  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.20.2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.1.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.17.0"></script>
+
+  <!-- Import pure.css -->
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
+    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Google font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+
+  <!-- CSS file -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
+
+
+</head>
+
+<body>
+
+  <div class="page">
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h1><center>WHEN THE SKIES TURN DARK</center></h1>
+        <p><b><center>In the vast expanse of the skies, where dreams of travel and connections between continents take flight, there exists a shadowy realm — a realm marred by the tragic and heart-wrenching reality of flight crashes. As we embark on this visual journey, we ask you to accompany us with empathy, respect, and a profound sense of purpose.</center></b></p>
+      </div>
+    </div>
+    <!-- end pure grid group -->
+
+    <!-- pure grid group -->
+    <div class="pure-g">
+      
+      <div class="pure-u-1-1">
+        <h2>Since 1960</h2>
+        <h6>Hover in to get details</h6>
+        <div id="vis1" class="vis-container"></div>
+      </div>
+    </div>
+    <!-- end pure grid group -->
+        <!-- pure grid group -->
+        <div class="pure-g">
+      
+          <div class="pure-u-1-1">
+            <h2>Where did it happen</h2>
+            <h6>Hover in to get information on each crash</h6>
+            <div id="vis2" class="vis-container"></div>
+          </div>
+        </div>
+        <!-- end pure grid group -->`
+
+    <!-- pure grid group -->
+    <h2>HOW???</h2>
+    <h6>The dots only show the relative values, they are not actual values. Roughly</br>
+    one <span class="highlighted-text2">black</span> box == 1000 crashes</br>
+  one <span class="highlighted-text">red</span> box == 5000 Deaths</h6> 
+    <div class="pure-g">   
+
+      <div class="pure-u-1-4">
+        <h5>Human Error</h5>
+        <img src="./data/human1.png" width="60" height="60"   >   
+        <div id="vis5" class="vis-container"></div>
+      </div>
+      <div class="pure-u-1-4">
+        <h5>Technical Issue</h5>
+        <img src="./data/tech.png" width="60" height="60"   > 
+        <div id="vis6" class="vis-container"></div>
+      </div>
+      <div class="pure-u-1-4">
+        <h5>Highjacking</h5>
+        <img src="./data/highjack.png" width="60" height="60"   > 
+        <div id="vis7" class="vis-container"></div>
+      </div>
+      <div class="pure-u-1-4">
+        <h5>Weather</h5>
+        <img src="./data/weather.png" width="60" height="60"   > 
+        <div id="vis8" class="vis-container"></div>
+      </div>  
+
+    </div>
+    <!-- end pure grid group -->        
+
+        <!-- pure grid group -->
+        <div class="pure-g">
+          
+          <div class="pure-u-2-3">
+            <h2>Phase when crashing</h2>
+            <div id="vis3" class="vis-container"></div>
+          </div>
+          <div class="pure-u-1-3">
+            <div class="description description-right">
+                           
+              <p></br></br></br></br></br></br></br>
+                
+                Most crashes have happened during <span class="highlighted-text2">takeoff,flight or landing.</span>
+                Accidents can occur during any of these phases due to various factors, including weather conditions, technical failures, human error, or a combination of these elements. </p>
+            </div>
+          </div>
+    
+        </div>
+        <!-- end pure grid group -->
+        <!-- pure grid group -->
+        <div class="pure-g">
+          <div class="pure-u-1-3">
+            <h2>Top 20 Operators</h2>
+            <div class="description description-left">
+                           
+              <p></br>
+                
+A flight operator, also known as an airline, manages aircraft, schedules, and services to transport passengers and cargo. Their responsibilities include flight scheduling, crew management, safety compliance, and providing air travel services. They play a central role in connecting people and businesses globally.</br></br>
+                
+                <span class="highlighted-text">Hover around for the amount of crashes. The amount is devided by 1000</span>
+              The size of the bubbles shows the crash count of the top 20 Operators.<span class="highlighted-text2">Fly safe and dont forget to play around with the gravity</span></p>
+            </div>
+          </div>
+          
+          <div class="pure-u-2-3">
+            
+            <div id="vis4" class="vis-container"></div>
+          </div>
+          
+    
+        </div>
+        <!-- end pure grid group -->
+
+
+
+
+
+    <div class="pure-g">
+      <div class="pure-u-1-1 small-font">
+        <p>This visualisation is created by Kabeeshan Gunasekaran. The datasource is from <a href="https://www.kaggle.com/datasets" target=" _blank">Kaggle</href>.</p>
+      </div>
+    </div>
+
+
+  </div> <!-- end page -->
+
+  <script type="text/javascript">
+    var specVis1 = "./js/Since1960.vg.json";
+    var specVis2 = "./js/symbol_map.vg.json";
+    var specVis3 = "./js/line.vg.json";
+    var specVis4 = "./js/Bubble.vg.json";
+    var specVis5 = "./js/dot1.vg.json";
+    var specVis6 = "./js/dot2.vg.json";
+    var specVis7 = "./js/dot3.vg.json";
+    var specVis8 = "./js/dot4.vg.json";
+
+    vegaEmbed('#vis1', specVis1, { "actions": false });
+    vegaEmbed('#vis2', specVis2, { "actions": false });
+    vegaEmbed('#vis3', specVis3, { "actions": false });
+    vegaEmbed('#vis4', specVis4, { "actions": false });
+    vegaEmbed('#vis5', specVis5, { "actions": false });
+    vegaEmbed('#vis6', specVis6, { "actions": false });
+    vegaEmbed('#vis7', specVis7, { "actions": false });
+    vegaEmbed('#vis8', specVis8, { "actions": false });
+
+
+  </script>
+</body>
+
+</html>

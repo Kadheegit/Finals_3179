@@ -1,0 +1,85 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "The population of the German city of Falkensee over time",
+  "width": 420,
+  "height": 300,
+  "data": {
+    "url": "https://raw.githubusercontent.com/Kadheegit/Finals_3179/main/data/Plane%20Crashes.csv",
+
+    "format": {
+      "parse": {"year": "date:'%Y'"}
+    }
+  },
+  "layer": [
+    {
+      "mark": "rect",
+      "data": {
+        "values": [
+          {
+            "start": "1900",
+            "end": "1920",
+            "event": "Loading"
+          },
+          {
+            "start": "1920",
+            "end": "1940",
+            "event": "Takeoff"
+          },
+          {
+            "start": "1940",
+            "end": "1960",
+            "event": "Flight"
+          },
+          {
+            "start": "1960",
+            "end": "1980",
+            "event": "Landing"
+          },
+          {
+            "start": "1980",
+            "end": "2000",
+            "event": "Taxiing"
+          },
+          {
+            "start": "2000",
+            "end": "2022",
+            "event": "Parking"
+          }
+        
+        ],
+        "format": {
+          "parse": {"start": "date:'%Y'", "end": "date:'%Y'"}
+        }
+      },
+      "encoding": {
+        "x": {
+          "field": "start",
+          "timeUnit": "year"
+        },
+        "x2": {
+          "field": "end",
+          "timeUnit": "year"
+        },
+        "color": {"field": "event", "type": "nominal",
+        "scale": {
+          "domain": ["Loading", "Takeoff", "Flight", "Landing", "Taxiing", "Parking"],
+          "range": ["#f7b0b0", "#f79494", "#f04141", "#f51414", "#f59a9a", "#f7b0b0"]
+        }}
+      }
+    },
+    {
+      "mark": "line",
+      "encoding": {
+        "x": {
+          "field": "P Year",
+          "timeUnit": "year",
+          "title": "Flight Phase"
+        },
+        "y": {"field": "P Count", "type": "quantitative", "title": "Crash Count"},
+        "color": {"value": "#333"}
+      }
+    }
+    
+
+  ]
+}

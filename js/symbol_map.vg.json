@@ -1,0 +1,219 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  
+  "data": {
+    "url": "https://raw.githubusercontent.com/Kadheegit/Project2/main/FinalData1.csv"
+  },
+  
+  "vconcat": [
+    {
+      "hconcat": [
+        
+        {
+          "width": 720,
+          "height": 350,
+          
+          
+          "projection": {"type": "equirectangular"},
+          "layer": [
+            {
+              "data": {
+                "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/ne_110m_admin_0_countries.topojson",
+                "format": {
+                  "type": "topojson",
+                  "feature": "ne_110m_admin_0_countries"
+                  
+                  
+                }
+              },
+              "mark": {
+                "type": "geoshape",
+                "fill": "#d8dce8",
+                "stroke": "white"                                   
+                
+                
+              }
+            },
+            
+
+            {
+              
+              "transform": [{"filter": {"param": "time_brush"}}],
+              "encoding": {
+              
+                "longitude": {"field": "Longitude", "type": "quantitative"},
+                "latitude": {"field": "Latitude", "type": "quantitative"},
+
+
+
+                "tooltip": [
+                  {"field": "Date", "type": "temporal"},
+                  {"field": "Fatalities", "type": "quantitative"},
+                  {"field": "Location", "type": "nominal"}
+                ]
+              },
+              "layer": [
+                {"mark": {
+                  "type": "circle", 
+                  "opacity": 0.4,
+                  "color":"red"
+                
+                },
+                                  
+                  "encoding": {
+                    "size":{
+                      "field":"Fatalities",
+                      "scale":{
+                        "type": "threshold",
+                        "domain":[100,200,300,400,500],
+                        "range": [10,50,75,200,400]
+
+                      }
+                    }
+                    
+                  }
+                },
+                {
+                  "transform": [
+                    {
+                      "window": [{"op": "rank", "as": "ranking" }],
+                      "sort": [{"field": "Fatalities", "order": "descending"}]
+                    },
+                    
+                    {"filter": "datum.ranking == 1"},
+
+                    
+                    {
+                      "calculate": "'The worst crash of: the selected period: ' + datum['Fatalities']",
+                      "as": "text_annotation_raw"
+                    },
+                    {
+                      "calculate": "split(datum.text_annotation_raw, ':')",
+                      "as": "text_annotation"
+                    }
+                  ],
+                  "layer": [
+                    {
+                      "mark": {
+                        "type": "point",
+                        "size": 1000,
+                        "shape": "M0,.5L.6,.8L.5,.1L1,-.3L.3,-.4L0,-1L-.3,-.4L-1,-.3L-.5,.1L-.6,.8L0,.5Z",
+                        "color": "black"
+                      },
+                      "encoding": {
+                        "size": {
+                          "field": "Fatalities",
+                          "type": "quantitative",
+                          "legend": null
+
+                          
+                        }
+                      }
+                    },
+                    {
+                      "mark": {
+                        "type": "text",
+                        "align": "right",
+                        "dx": -8,
+                        "dy": -8,
+                        "baseline": "middle",
+                        "fontStyle": "italic",
+                        "color": "black",
+                        "fontSize": 11
+                      },
+                      
+                      "encoding": {"text": {"aggregate": "max", "field": "Fatalities", "type": "quantitative"}
+
+                    }
+                    },
+                    {
+                      "transform": [
+              
+                          {
+                            "calculate": "'The star sign shows the Largest crash; in the selected period. '",
+                            "as": "text_annotation_raw"
+                          },
+                          {
+                            "calculate": "split(datum.text_annotation_raw, ';')",
+                            "as": "text_annotation2"
+                          }
+                        ],
+                      "mark": {
+                          "type": "text",  
+                          "align": "center",
+                          "baseline": "middle",
+                          "dx": 5,  
+                          "color": "orange",
+                          "fontWeight": "bold"
+                      },
+                      "encoding": {
+                        "text": {"field":"text_annotation2" },
+                        "x": { "value": 100 }, 
+                        "y": { "value": 300 } 
+                      }
+                    },
+                    {
+                      "transform": [
+              
+                          {
+                            "calculate": "'Hover over the circle; for the details of the crash. '",
+                            "as": "text_annotation_raw"
+                          },
+                          {
+                            "calculate": "split(datum.text_annotation_raw, ';')",
+                            "as": "text_annotation2"
+                          }
+                        ],
+                      "mark": {
+                          "type": "text",  
+                          "align": "center",
+                          "baseline": "middle",
+                          "dx": 5,  
+                          "color": "orange",
+                          "fontWeight": "bold"
+                      },
+                      "encoding": {
+                        "text": {"field":"text_annotation2" },
+                        "x": { "value": 100 }, 
+                        "y": { "value": 260 } 
+                      }
+                    }
+                  
+                    
+                  ]
+                }
+              ]
+
+            }
+          ]
+        }
+
+      ]
+    },
+    {
+      "width": 780,
+      "height": 60,
+      "mark": {"type": "line", "color": "#eb0404"},
+      "title": "Use this line chart to filter out the data based on time",
+      "params": [
+        {
+          "name": "time_brush",
+          "select": {"type": "interval", "encodings": ["x"]}
+        }
+      ],
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "timeUnit": "yearmonth",
+          "axis": {"title": "", "format": "%Y"}
+        },
+        "y": {
+          "aggregate": "count",
+          "axis": {"tickCount": 3, "grid": false},
+          "title": "Count"
+        }
+      }
+    }
+  ],
+  "config": {"title": {"font": "sans-serif", "fontSize": 16}}
+}
